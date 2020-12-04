@@ -1,1 +1,65 @@
 /* You can add global styles to this file, and also import other style files */
+a { cursor: pointer; }
+
+.app-container {
+    min-height: 320px;
+    overflow: hidden;
+}
+
+.btn-delete-user {
+    width: 40px;
+    text-align: center;
+    box-sizing: content-box;
+}
+
+.card {
+    margin: auto;
+    width: 50%;
+}
+
+.btn-width {
+    width: 100%;
+    text-transform: uppercase;
+}
+
+.common {
+    text-align: center;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    border: 1px solid #7fffd4;
+    border-radius: 10px;
+}
+
+.item span {
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.item p {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.txt-color {
+    color: black !important;
+    &:hover, &:active, &:focus {
+        color: white !important;
+    }
+}
+.active {
+    color: white !important;
+}
+
+.navbar-end {
+    justify-content: flex-end;
+    padding-right: 20rem;
+    background-color: #b9ccdc;
+}
