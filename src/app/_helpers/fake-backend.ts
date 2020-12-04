@@ -5,7 +5,7 @@ import { delay, materialize, dematerialize } from 'rxjs/operators';
 
 // array in local storage for registered users
 const usersKey = 'angular-10-registration-login-example-users';
-let users = JSON.parse(localStorage.getItem(usersKey)) || [];
+const users = JSON.parse(localStorage.getItem(usersKey)) || [];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -14,7 +14,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         return handleRoute();
 
-        function handleRoute() {
+        function handleRoute(): any {
             switch (true) {
                 case url.endsWith('/users/authenticate') && method === 'POST':
                     return authenticate();
@@ -23,26 +23,29 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
-            }    
+            }
         }
 
         // route functions
 
-        function authenticate() {
-            const { username, password } = body;
-            const user = users.find(x => x.username === username && x.password === password);
-            if (!user) return error('Username or password is incorrect');
+        function authenticate(): object {
+            const { email, password } = body;
+            const user = users.find(x => x.email === email && x.password === password);
+            console.log(users);
+            if (!user) {
+                return error('Email or password is incorrect');
+            }
             return ok({
                 ...basicDetails(user),
                 token: 'fake-jwt-token'
-            })
+            });
         }
 
-        function register() {
-            const user = body
+        function register(): object {
+            const user = body;
 
-            if (users.find(x => x.username === user.username)) {
-                return error('Username "' + user.username + '" is already taken')
+            if (users.find(x => x.email === user.email)) {
+                return error('Email "' + user.email + '" is already taken');
             }
 
             user.id = users.length ? Math.max(...users.map(x => x.id)) + 1 : 1;
@@ -52,28 +55,28 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         // helper functions
-
-        function ok(body?) {
+        // tslint:disable-next-line:no-shadowed-variable
+        function ok(body?): Observable<HttpResponse<any>> {
             return of(new HttpResponse({ status: 200, body }))
                 .pipe(delay(500)); // delay observable to simulate server api call
         }
 
-        function error(message) {
+        function error(message): object {
             return throwError({ error: { message } })
-                .pipe(materialize(), delay(500), dematerialize()); // call materialize and dematerialize to ensure delay even if an error is thrown (https://github.com/Reactive-Extensions/RxJS/issues/648);
+            .pipe(materialize(), delay(500), dematerialize());
         }
 
-        function unauthorized() {
+        function unauthorized(): object {
             return throwError({ status: 401, error: { message: 'Unauthorized' } })
                 .pipe(materialize(), delay(500), dematerialize());
         }
 
-        function basicDetails(user) {
+        function basicDetails(user): object {
             const { id, username, firstName, lastName } = user;
             return { id, username, firstName, lastName };
         }
 
-        function isLoggedIn() {
+        function isLoggedIn(): boolean {
             return headers.get('Authorization') === 'Bearer fake-jwt-token';
         }
     }

@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
-import { AccountService, AlertService } from '@app/_services';  
+import { AccountService, AlertService } from '@app/_services';
+import { RegisterComponent } from '../register/register.component';
 
 @Component({
   selector: 'app-login',
@@ -21,20 +23,36 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private accountService: AccountService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<LoginComponent>
   ) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
   }
 
-  // convenience getter for easy access to form fields
-  get f() { return this.form.controls; }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(RegisterComponent);
 
-  onSubmit() {
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  // convenience getter for easy access to form fields
+  get f(): any { return this.form.controls; }
+
+  getErrorMessage(): any {
+    if (this.f.email.hasError('required') || this.f.password.hasError('required')) {
+      return 'You must enter a value';
+    }
+
+    return this.f.email.hasError('email') ? 'Not a valid email' : '';
+  }
+  onSubmit(): any {
     this.submitted = true;
 
     // reset alerts on submit
@@ -46,12 +64,14 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
-    this.accountService.login(this.f.username.value, this.f.password.value)
+    this.accountService.login(this.f.email.value, this.f.password.value)
       .pipe(first())
       .subscribe({
         next: () => {
             // get return url from query parameters or default to home page
+            /* tslint:disable:no-string-literal */
             const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
+            this.dialogRef.close();
             this.router.navigateByUrl(returnUrl);
         },
         error: error => {

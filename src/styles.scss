@@ -20,10 +20,20 @@ a { cursor: pointer; }
 .btn-width {
     width: 100%;
     text-transform: uppercase;
+    margin-top: 20px !important;
 }
 
 .common {
     text-align: center;
+}
+
+.row {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    width: 50%;
+    margin: auto;
+    padding-top: 20px;
 }
 
 .item {
@@ -34,6 +44,8 @@ a { cursor: pointer; }
     height: 300px;
     border: 1px solid #7fffd4;
     border-radius: 10px;
+    width: 100%;
+    margin-left: 20px;
 }
 
 .item span {
@@ -63,3 +75,5 @@ a { cursor: pointer; }
     padding-right: 20rem;
     background-color: #b9ccdc;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

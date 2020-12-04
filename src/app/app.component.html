@@ -1,25 +1,18 @@
 ﻿﻿<!-- nav -->
-<nav class="navbar navbar-expand navbar-dark bg-dark navbar-end" *ngIf="user">
-  <div class="navbar-nav">
-    <!-- <a class="nav-item nav-link" routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a> -->
-    <a class="nav-item nav-link mr-2">SOLUTIONS</a>
-    <a class="nav-item nav-link mr-2">RESOURCES</a>
-    <a class="nav-item nav-link mr-2">ABOUT</a>
-    <a class="nav-item btn btn-info mr-2">PRICING</a>
-    <a class="nav-item nav-link mr-2" (click)="logout()">Logout</a>
-  </div>
+<nav mat-tab-nav-bar class="navbar-end" *ngIf="user">
+  <a mat-tab-link class="mr-2">SOLUTIONS</a>
+  <a mat-tab-link class="mr-2">RESOURCES</a>
+  <a mat-tab-link class="mr-2">ABOUT</a>
+  <button mat-flat-button color="warn">PRICING</button>
+  <a mat-tab-link class="mr-2" (click)="logout()">Logout</a>
 </nav>
-
-<nav class="navbar navbar-expand navbar-dark navbar-end" *ngIf="!user">
-  <div class="navbar-nav">
-    <a class="nav-item nav-link txt-color" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">KUMULATE</a>
-    <a class="nav-item nav-link txt-color" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">SOLUTIONS</a>
-    <a class="nav-item nav-link txt-color" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">RESOURCES</a>
-    <a class="nav-item nav-link txt-color" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">ABOUT</a>
-    <a class="nav-item nav-link txt-color" routerLink="/account/login" routerLinkActive="active" >SIGN IN</a>
-  </div>
+<nav mat-tab-nav-bar class="navbar-end" *ngIf="!user">
+  <a mat-tab-link class="txt-color" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">KUMULATE</a>
+  <a mat-tab-link class="txt-color" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">SOLUTIONS</a>
+  <a mat-tab-link class="txt-color" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">RESOURCES</a>
+  <a mat-tab-link class="txt-color" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">ABOUT</a>
+  <button mat-button class="txt-color" (click)="openDialog()">SIGN IN</button>
 </nav>
-
 <!-- main app container -->
 <div class="app-container" [ngClass]="{ 'bg-light': user }">
   <alert></alert>

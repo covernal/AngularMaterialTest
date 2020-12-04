@@ -10,7 +10,7 @@ const accountModule = () => import('./components/account/account.module').then(x
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: 'account', loadChildren: accountModule },
+  // { path: 'account', loadChildren: accountModule },
 ];
 
 @NgModule({

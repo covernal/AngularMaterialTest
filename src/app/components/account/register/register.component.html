@@ -1,44 +1,33 @@
-<div class="card">
-    <h4 class="card-header">Register</h4>
-    <div class="card-body">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <div class="form-group">
-                <label for="firstName">First Name</label>
-                <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
-                <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-                    <div *ngIf="f.firstName.errors.required">First Name is required</div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="lastName">Last Name</label>
-                <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
-                <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
-                    <div *ngIf="f.lastName.errors.required">Last Name is required</div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="username">Email</label>
-                <input type="email" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
-                <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                    <div *ngIf="f.username.errors.required">Email is required</div>
-                    <div *ngIf="f.username.errors.pattern">Please provide a valid email address</div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                    <div *ngIf="f.password.errors.required">Password is required</div>
-                    <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
-                </div>
-            </div>
-            <div class="form-group">
-                <button [disabled]="loading" class="btn btn-primary">
-                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                    Register
-                </button>
-                <a routerLink="../login" class="btn btn-link">Cancel</a>
-            </div>
-        </form>
-    </div>
+<div class="main-wrapper" fxLayout="row" fxLayoutAlign="center center">
+    <h4 mat-dialog-title>Register</h4>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill" class="btn-width">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" required/>
+            <mat-error *ngIf="f.firstName.errors">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="btn-width">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" required/>
+            <mat-error *ngIf="f.lastName.errors">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="btn-width">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" required/>
+            <mat-error *ngIf="f.email.errors">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="btn-width">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password" required minlength="6"/>
+            <mat-error *ngIf="f.password.errors">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <div mat-dialog-actions>
+            <button mat-raised-button color="primary" [disabled]="loading" class="btn-width">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Register
+            </button>
+            
+        </div>
+    </form>
+    <button mat-dialog-close mat-raised-button color="accent" class="btn-width" >Cancel</button>
 </div>
